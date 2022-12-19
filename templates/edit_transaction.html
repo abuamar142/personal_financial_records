@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>Edit Transaction</title>
+</head>
+<body">
+    <div class="min-h-screen min-w-full flex bg-[#FFFBEB]">
+
+        <!-- container untuk sidebar -->
+        <div class="bg-[#263159] p-10 min-w-max flex flex-col justify-between">
+
+            <!-- container untuk logo dan menu pada sidebar -->
+            <div>
+
+                <!-- menampilkan logo -->
+                <div class="flex items-center gap-3">
+                    <div>
+                        <img src="/static/images/logo.svg" alt="logo">
+                    </div>
+                    <div class="text-[#FFFBEB] font-bold">
+                        <p>Personal Financial Records</p>
+                    </div>
+                </div>
+
+                <!-- menampilkan pilihan menu pada sidebar -->
+                <div class="-mr-10 text-center flex flex-col gap-5 mt-52">
+
+                    <!-- link untuk menuju halaman dashboard -->
+                    <a href="{{ url_for('index') }}">
+                        <div class="bg-[#FFFBEB] py-3 flex border-2 border-[#FFFBEB] gap-5 pl-10 rounded-l-xl">
+                            <img src="/static/images/dark-Home.svg" alt="dashboard">
+                            <p class="text-[#263159] font-bold">
+                                Dashboard
+                            </p>
+                        </div>
+                    </a>
+    
+                    <!-- link untuk menuju halaman profil -->
+                    <a href="{{ url_for('profile') }}">
+                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <img src="/static/images/light-Profile.svg" alt="profile">
+                            <p class="text-[#FFFBEB] font-bold">
+                                Profile
+                            </p>
+                        </div>
+                    </a>
+    
+                    <!-- link untuk keluar aplikasi -->
+                    <a href="{{ url_for('logout') }}">
+                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <img src="/static/images/light-Logout.svg" alt="logout">
+                            <p class="text-[#FFFBEB] font-bold">
+                                Logout
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        
+            <!-- menampilkan copyright -->
+            <div class="text-[#FFFBEB] text-sm">
+                Copyright @ Kelompok 4 <br> Privacy policy
+            </div>
+        </div>
+
+        <!-- container untuk konten utama -->
+        <div class="fixed w-full pl-[330px]">
+            <div class="bg-[#FFFBEB] flex justify-between items-center p-10 pb-5 border-b-2 border-[#263159]">
+
+                <!-- tampilan username -->
+                <div class="flex flex-col gap-3">
+                    <p class="text-3xl font-bold">{{ name }}</p>
+                </div>
+    
+                <!-- tampilan dari saldo -->
+                <div class="flex gap-5 items-center">
+                    <p class="text-xl">Your Balance</p>
+                    <div class="px-14 py-2 bg-[#263159] rounded-lg text-[#FFFBEB]">
+                        <p class="font-bold text-lg">
+                            {{ saldo }}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- container untuk membungkus konten utama dan tombol-tombol -->
+        <div class="p-10 w-full flex flex-col content-between">    
+            
+            <!-- container untuk membungkus tombol-tombol -->
+            <div class="mt-24 flex flex-col text-center">
+
+                <!-- tampilan flash message -->
+                {% if kosong %}
+                <div class="p-4 text-center text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">
+                    Form tidak boleh kosong!
+                </div>
+                {% elif bukan_angka %}
+                <div class="p-4 text-center text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">
+                    Masukkan form nominal dengan angka!
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- container untuk membungkus add income form -->
+            <div class="flex flex-col rounded-xl" id="add_income">
+                <div>
+                    <p class="text-4xl font-bold text-center mt-4 mb-8">Edit your Transaction</p>
+                    <p class="text-base mt-2 text-center">
+                        "Money, like emotions, is something you must control to keep your life <br> on the right track." - Natasha Munson, author, inspirational speaker and CEO of Be Magic, Inc.
+                    </p>
+                    
+                    <div class="mx-14 my-7">
+                        <form action="#" method="post" enctype="multipart/form-data">
+                            <div class="flex flex-col gap-3">
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" value="{{ data[4] }}" name="description">
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" value="{{ data[2] }}" name="nominal">
+                                <input type="file" name="nota" class="bg-transparent rounded-md border-[#263159] border-2 file:mr-4 file:py-3 file:px-5 file:font-semibold file:bg-[#263159] file:text-[#FFFBEB] hover:file:bg-transparent hover:file:text-[#263159] file:border-0">
+                            </div>
+                            <div class="flex gap-28">
+                                <a class="bg-red-500 border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-7 text-center hover:animate-pulse" href="{{ url_for('index') }}">Back</a>
+                                <input class="bg-[#263159] border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-7 hover:animate-pulse" type="submit" value="Save">
+                            </div>
+                        </form>
+                    </div>
+
+                    <p class="text-base mt-2 text-center">
+                        - Save money and money will save you -
+                    </p>
+
+                </div>
+            </div>
+
+            <hr class="mt-8 border border-[#263159]">
+            
+        </div>
+        
+    </div>
+</body>
+</html>

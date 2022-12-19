@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <title>Profile</title>
+</head>
+<body">
+    <div class="min-h-screen min-w-full flex bg-[#FFFBEB]">
+
+        <!-- container untuk sidebar -->
+        <div class="bg-[#263159] p-10 min-w-max flex flex-col justify-between">
+
+            <!-- container untuk logo dan menu pada sidebar -->
+            <div>
+                <!-- menampilkan logo -->
+                <div class="flex items-center gap-3">
+                    <div>
+                        <img src="/static/images/logo.svg" alt="logo">
+                    </div>
+                    <div class="text-[#FFFBEB] font-bold">
+                        <p>Personal Financial Records</p>
+                    </div>
+                </div>
+    
+                <!-- menampilkan pilihan menu pada sidebar -->
+                <div class="-mr-10 text-center flex flex-col gap-5 mt-52">
+
+                    <!-- link untuk menuju halaman dashboard -->
+                    <a href="{{ url_for('index') }}">
+                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <img src="/static/images/light-Home.svg" alt="dashboard">
+                            <p class="text-[#FFFBEB] font-bold">
+                                Dashboard
+                            </p>
+                        </div>
+                    </a>
+    
+                    <!-- link untuk menuju halaman profil -->
+                    <a href="#">
+                        <div class="bg-[#FFFBEB] py-3 flex border-2 border-[#FFFBEB] gap-5 pl-10 rounded-l-xl">
+                            <img src="/static/images/dark-Profile.svg" alt="profile">
+                            <p class="text-[#263159] font-bold">
+                                Profile
+                            </p>
+                        </div>
+                    </a>
+    
+                    <!-- link untuk keluar aplikasi -->
+                    <a href="{{ url_for('logout') }}">
+                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <img src="/static/images/light-Logout.svg" alt="logout">
+                            <p class="text-[#FFFBEB] font-bold">
+                                Logout
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        
+            <!-- menampilkan copyright -->
+            <div class="text-[#FFFBEB] text-sm">
+                Copyright @ Kelompok 4 <br> Privacy policy
+            </div>
+        </div>
+
+        <div class="p-10 w-full flex flex-col content-between">    
+            <div class="mt-10 flex flex-col text-center">
+
+                <!-- tampilan flash message -->
+                {% if berhasil %}
+                <div class="p-4 mb-4 -mt-10 text-center text-sm text-[#263159] bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                    Profil berhasil diganti!
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- container untuk membungkus add spending form -->
+            <div class="flex flex-col rounded-xl" id="add_spending">
+                <div>
+
+                    <!-- link untuk menuju halaman edit profile -->
+                    <div class="flex gap-5 justify-center items-center mt-8">
+                        <p class="text-4xl font-bold text-center">Profile</p>
+                        <a href="{{ url_for('edit_profile') }}">
+                            <img class="px-4 py-4 rounded-full bg-[#263159]" src="/static/images/light-Edit.svg" alt="edit">
+                        </a>
+                    </div>
+
+                    <!-- tampilan username -->
+                    <p class="text-lg font-bold mt-2 text-center">
+                        {{ data[1] }} 
+                    </p>
+
+                    <!-- tampilan bio -->
+                    <p class="text-base mt-2 text-center">
+                        - {{ data[5] }} -
+                    </p>
+                    
+                    <div class="mx-64 my-7">
+                        <div class="flex flex-col gap-3">
+
+                            <!-- tampilan username -->
+                            <div class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] flex">
+                                <div class="w-[100px]">
+                                    Username
+                                </div>
+                                <div>
+                                    :
+                                </div>
+                                <div class="ml-5">
+                                    {{ data[2] }}
+                                </div>
+                            </div>
+
+                            <!-- tampilan password -->
+                            <div class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] flex">
+                                <div class="w-[100px]">
+                                    Password
+                                </div>
+                                <div>
+                                    :
+                                </div>
+                                <div class="ml-5">
+                                    {{ data[3] }}
+                                </div>
+                            </div>
+
+                            <!-- tampilan name -->
+                            <div class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] flex">
+                                <div class="w-[100px]">
+                                    Nama
+                                </div>
+                                <div>
+                                    :
+                                </div>
+                                <div class="ml-5">
+                                    {{ data[1] }}
+                                </div>
+                            </div>
+
+                            <!-- tampilan saldo dari user -->
+                            <div class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] flex">
+                                <div class="w-[100px]">
+                                    Saldo
+                                </div>
+                                <div>
+                                    :
+                                </div>
+                                <div class="ml-5">
+                                    {{ saldo }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <p class="text-base mt-2 text-center">
+                        - Save money and money will save you -
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+</body>
+</html>

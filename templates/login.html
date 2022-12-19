@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <title>Login</title>
+</head>
+
+<!-- script untuk show dan hide text pada kolom password -->
+<script>
+
+    // script untuk show dan hide password form
+    function showPassword(id) {
+      var password = document.getElementById(id);
+      if (password.type === "password") {
+        password.type = "text";
+      } else {
+        password.type = "password";
+      }
+    }
+</script>
+<body">
+    <div class="bg-[#263159] min-h-screen p-10 flex flex-col justify-between">
+        
+        <!-- menampilkan logo -->
+        <div class="flex items-center gap-3">
+            <div>
+                <img src="/static/images/logo.svg" alt="logo">
+            </div>
+            <div class="text-[#FFFBEB] font-bold">
+                <p>Personal Financial Records</p>
+            </div>
+        </div>
+
+        <!-- container untuk login card -->
+        <div>
+            <div class="bg-[#FFFBEB] mx-auto py-10 rounded-xl flex flex-col gap-5 max-w-lg">
+
+                <!-- tampilan flash message -->
+                {% if tidak_ada %}
+                    <div class="p-4 mb-4 -mt-10 text-center text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                        Username dan password tersebut tidak ada dalam database!
+                    </div>
+                {% elif kosong %}
+                    <div class="p-4 mb-4 -mt-10 text-center text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">
+                        Form username dan password tidak boleh kosong!
+                    </div>
+                {% elif kurang %}
+                    <div class="p-4 mb-4 -mt-10 text-center text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800" role="alert">
+                        Username dan password tidak boleh kurang dari 3 karakter!
+                    </div>
+                {% elif berhasil %}
+                    <div class="p-4 mb-4 -mt-10 text-center text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                        Registrasi berhasil
+                    </div>
+                {% endif %}
+
+                <div class="px-10 flex flex-col gap-5">
+                    <p class="text-center text-3xl font-bold">Welcome back</p>
+                    <p class="text-center">Hey, Enter your details to get sign in <br> to your account</p>
+
+                    <!-- form login -->
+                    <form action="#" method="post">
+                        <div class="flex flex-col gap-3">
+
+                            <!-- form username -->
+                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="username" placeholder="Username" name="username">
+
+                            <!-- form password -->
+                            <div class="relative">
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] w-full" type="password" placeholder="Password" name="password" id="password">
+                                <i class="fa-regular fa-eye-slash absolute -translate-x-10 translate-y-5 cursor-pointer" onclick="showPassword('password')"><button></button></i>
+                            </div>
+                        </div>
+
+                        <!-- tombol login -->
+                        <input class="bg-[#263159] border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-7 hover:bg-transparent hover:text-[#263159]" type="submit" value="Sign in">
+                    </form>
+
+                    <!-- link untuk menuju halaman register -->
+                    <div class="flex justify-center gap-1">
+                        <p>
+                            Don’t have an account?
+                        </p>
+                        <a href="{{ url_for('register') }}" class="font-bold">Request now</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- tampilan copyright -->
+        <div class="text-[#FFFBEB] text-sm">
+            Copyright @ Kelompok 4 <br> Privacy policy
+        </div>
+        
+    </div>
+</body>
+</html>
