@@ -10,16 +10,11 @@ application.config['MAX_CONTENT_PATH'] = 10000000
 pengguna = Pengguna()
 transaksi = Transaksi()
 
-@application.route('/')
-def index():
-    if 'name' not in session:
-        return redirect(url_for('login'))
-    if session.get('role') == 'admin':
-        return redirect(url_for('dashboard_admin'))
-    
-    # data keuangan
-    pemasukan = transaksi.getCountIncomebyUser(session.get('pengguna_id'))
-    pengeluaran = transaksi.getCountSpendingbyUser(session.get('pengguna_id'))
+def hitung_saldo():
+    pengguna_id = session.get('pengguna_id')
+
+    pemasukan = transaksi.get_sum_income(pengguna_id)
+    pengeluaran = transaksi.get_sum_spending(pengguna_id)
     if pemasukan == None or pengeluaran == None:
         pemasukan = 0
         pengeluaran = 0
@@ -34,7 +29,16 @@ def index():
         if persen > 100:
             persen = 100
         data_rekap = (pemasukan, pengeluaran, persen, saldo)
+    return data_rekap
 
+@application.route('/')
+def index():
+    if 'name' not in session:
+        return redirect(url_for('login'))
+    if session.get('role') == 'admin':
+        return redirect(url_for('dashboard_admin'))
+    
+    data_rekap = hitung_saldo()
 
     # semua data transaksi user
     data = transaksi.ambilDataTransaksi(session.get('pengguna_id'))
@@ -136,13 +140,7 @@ def dashboard_admin():
 def add_income():
     name = session.get('name')
 
-    pemasukan = transaksi.getCountIncomebyUser(session.get('pengguna_id'))
-    pengeluaran = transaksi.getCountSpendingbyUser(session.get('pengguna_id'))
-    if pemasukan == None or pengeluaran == None:
-        pemasukan = 0
-        pengeluaran = 0
-
-    saldo = pemasukan - pengeluaran
+    saldo = hitung_saldo()[3]
 
     if request.method == 'POST':
         # mengambil pengguna id dari session
@@ -182,13 +180,7 @@ def add_income():
 def add_spending():
     name = session.get('name')
 
-    pemasukan = transaksi.getCountIncomebyUser(session.get('pengguna_id'))
-    pengeluaran = transaksi.getCountSpendingbyUser(session.get('pengguna_id'))
-    if pemasukan == None or pengeluaran == None:
-        pemasukan = 0
-        pengeluaran = 0
-
-    saldo = pemasukan - pengeluaran
+    saldo = hitung_saldo()[3]
 
     if request.method == 'POST':
         # mengambil pengguna id dari session
@@ -227,12 +219,8 @@ def add_spending():
 @application.route('/profile')
 def profile():
     data = pengguna.ambilDataUserbyId(session.get('pengguna_id'))
-    pemasukan = transaksi.getCountIncomebyUser(session.get('pengguna_id'))
-    pengeluaran = transaksi.getCountSpendingbyUser(session.get('pengguna_id'))
-    if pemasukan == None and pengeluaran == None:
-        pemasukan = 0
-        pengeluaran = 0
-    saldo = pemasukan - pengeluaran
+
+    saldo = hitung_saldo()[3]
 
     if session.get('pesan') == 'update_profil_berhasil':
         session.pop('pesan', '')
@@ -275,13 +263,7 @@ def edit_profile():
 def edit_transaction(no):
     data = transaksi.ambilSatuDataTransaksi(no)
 
-    pemasukan = transaksi.getCountIncomebyUser(session.get('pengguna_id'))
-    pengeluaran = transaksi.getCountSpendingbyUser(session.get('pengguna_id'))
-    if pemasukan == None or pengeluaran == None:
-        pemasukan = 0
-        pengeluaran = 0
-
-    saldo = pemasukan - pengeluaran
+    saldo = hitung_saldo()[3]
 
     if request.method == 'POST':
         # mengambil pengguna id dari session

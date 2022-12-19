@@ -172,7 +172,7 @@ class Transaksi():
         self.closeDatabase()
         return jumlah[0] + 1
 
-    def getCountIncomebyUser(self, pengguna_id):
+    def get_sum_income(self, pengguna_id):
         self.openDatabase()
         cursor.execute(
             "SELECT SUM(pemasukan) FROM transaksi WHERE pengguna_id='%s'" % pengguna_id
@@ -181,7 +181,7 @@ class Transaksi():
         self.closeDatabase()
         return income[0]
 
-    def getCountSpendingbyUser(self, pengguna_id):
+    def get_sum_spending(self, pengguna_id):
         self.openDatabase()
         cursor.execute(
             "SELECT SUM(pengeluaran) FROM transaksi WHERE pengguna_id='%s'" % pengguna_id
