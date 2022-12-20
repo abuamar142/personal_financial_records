@@ -3,6 +3,8 @@ from models import Pengguna, Transaksi
 from functools import wraps
 import os
 
+os.system('sudo /opt/lampp/lampp start')
+
 application = Flask(__name__)
 application.config['SECRET_KEY'] = '1234567890!@#$%^&*()'
 application.config['UPLOAD_FOLDER'] = os.path.realpath('.') + '/static/uploads'
