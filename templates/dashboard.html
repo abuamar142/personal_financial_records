@@ -156,7 +156,7 @@
                         <table class="w-full">
                             <thead>
                               <tr>
-                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Date</th>
+                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 w-fit">Date</th>
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Description</th>
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Income</th>
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Spending</th>
@@ -171,8 +171,8 @@
                               {% for data in data %}
                               <tr class="border-b-2">
                                     <!-- tanggal -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
-                                      {{ data[3] }}
+                                    <td class="border-r-2 border-[#263159] py-2 w-fit">
+                                      {{ data[3].strftime("%A, %d %B %Y") }}
                                     </td>
 
                                     <!-- keterangan -->
