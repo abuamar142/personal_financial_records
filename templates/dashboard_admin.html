@@ -101,15 +101,14 @@
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">User Id</th>
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Name</th>
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Username</th>
-                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Password</th>
                                   <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Total Transaction</th>
                                   <th class="border-b-2 border-[#263159] py-4 px-4">Delete User</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
 
-                              <!-- menampilkan data user yang tidak punya transaksi pada table -->
-                              {% for data in data_user_0_transaksi %}
+                              <!-- menampilkan data user beserta jumlah transaksi -->
+                              {% for data in transaction_data %}
                               <tr>
                                     <!-- pengguna id -->
                                     <td class="border-r-2 border-[#263159] py-2 px-4">
@@ -126,16 +125,17 @@
                                         {{ data[2] }}
                                     </td>
 
-                                    <!-- password -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
-                                        {{ data[3] }}
-                                    </td>
-
                                     <!-- total transaction -->
+                                    {% if data[4] == None %}
                                     <td class="border-r-2 border-[#263159] py-2 px-4">
                                         0
                                     </td>
-
+                                    
+                                    {% else %}
+                                    <td class="border-r-2 border-[#263159] py-2 px-4">
+                                        {{ data[4] }}
+                                    </td>
+                                    {% endif %}
                                     <!-- menampilkan link delete user -->
                                     <td class="py-2 px-4 flex justify-center">
                                         <a href="#" class="hover:duration-700 hover:animate-pulse bg-transparent border-2 border-[#263159] p-2 rounded-full" onclick="showConfirmation('{{ data[0] }}')">
@@ -156,65 +156,6 @@
                                                 </div>
                                                 <div class="flex justify-between gap-36">
                                                     <a class="close-confirmation bg-[#263159] border-2 px-4 py-2 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-35 mt-7 text-center hover:animate-pulse" href="#" onclick="hideConfirmation('{{ data[0] }}')">No, Back</a>
-
-                                                    <a class="bg-red-500 border-2 px-4 py-2 rounded-md border-red-500 text-[#FFFBEB] font-bold w-35 mt-7 text-center hover:animate-pulse" href="{{ url_for('delete_user', no=data[0]) }}">Yes, Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end confirmation box -->
-
-                                    </td>
-                              </tr>
-                              {% endfor %}
-
-                              <!-- menampilkan data user yang mempunyai transaksi pada table -->
-                              {% for data in data_user_transaksi %}
-                              <tr>
-                                    <!-- pengguna id -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
-                                      {{ data[0] }}
-                                    </td>
-
-                                    <!-- nama -->
-                                    <td class="border-r-2 border-[#263159] py-2 text-left px-4">
-                                        {{ data[1] }}
-                                    </td>
-
-                                    <!-- username -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
-                                        {{ data[2] }}
-                                    </td>
-
-                                    <!-- password -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
-                                        {{ data[3] }}
-                                    </td>
-
-                                    <!-- total transaction -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
-                                        {{ data[4] }}
-                                    </td>
-
-                                    <!-- menampilkan link delete user -->
-                                    <td class="py-2 px-4 flex justify-center">
-                                        <a href="#" class="hover:duration-700 hover:animate-pulse bg-transparent border-2 border-[#263159] p-2 rounded-full" onclick="showConfirmation('{{ data[0] }}')">
-                                            <img src="/static/images/dark-Delete .svg" alt="delete-data" title="hapus-data">
-                                        </a>
-
-                                        <!-- start confirmation box -->
-
-                                        {% set id_confirm = "confirmation_box_%s" % data[0] %}
-
-                                        <div class="h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-[#263159] bg-opacity-50 invisible"  id={{ id_confirm }}>
-                                            <div class="bg-[#FFFBEB] rounded-lg shadow-lg w-1/3 flex flex-col gap-5 p-5 items-center">
-                                                <div>
-                                                    <img class="w-24" src="/static/images/dark-Danger Triangle.svg" alt="danger-icon">
-                                                </div>
-                                                <div>
-                                                    <h2 class="font-bold text-xl text-center">Are you sure you want to delete your transaction?</h2>
-                                                </div>
-                                                <div class="flex justify-between gap-36">
-                                                    <a class="bg-[#263159] border-2 px-4 py-2 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-35 mt-7 text-center hover:animate-pulse" href="#"  onclick="hideConfirmation('{{ data[0] }}')">No, Back</a>
 
                                                     <a class="bg-red-500 border-2 px-4 py-2 rounded-md border-red-500 text-[#FFFBEB] font-bold w-35 mt-7 text-center hover:animate-pulse" href="{{ url_for('delete_user', no=data[0]) }}">Yes, Delete</a>
                                                 </div>

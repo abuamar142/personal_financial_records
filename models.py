@@ -71,6 +71,15 @@ class Pengguna():
         self.closeDatabase()
         return data_user
 
+    def get_all_transaction(self):
+        self.openDatabase()
+        cursor.execute(
+            "SELECT P.pengguna_id, P.nama, P.username, P.password, COUNT(T.transaksi_id), T.transaksi_id FROM pengguna P  LEFT JOIN transaksi T ON P.pengguna_id = T.pengguna_id WHERE P.role = 'user' GROUP BY P.pengguna_id"
+        )
+        data_user = cursor.fetchall()
+        self.closeDatabase()
+        return data_user
+
     def insertDataUser(self, data):
         self.openDatabase()
         cursor.execute(

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, session, redirect, request, flash, get_flashed_messages
 from models import Pengguna, Transaksi
+from functools import wraps
 import os
 
 application = Flask(__name__)
@@ -10,7 +11,7 @@ application.config['MAX_CONTENT_PATH'] = 10000000
 pengguna = Pengguna()
 transaksi = Transaksi()
 
-def hitung_saldo():
+def balance_count():
     pengguna_id = session.get('pengguna_id')
 
     pemasukan = transaksi.get_sum_income(pengguna_id)
@@ -31,14 +32,40 @@ def hitung_saldo():
         data_rekap = (pemasukan, pengeluaran, persen, saldo)
     return data_rekap
 
+def check_role(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        if session.get('role') == 'admin':
+            return redirect(url_for('dashboard_admin'))
+        if session.get('role') == 'user':
+            return redirect(url_for('index'))
+        return func(*args, **kwargs)
+    return decorated
+
+def check_session_user(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        if 'name' not in session:
+            return redirect('login')
+        elif session.get('role') == 'admin':
+            return redirect(url_for('dashboard_admin'))
+        return func(*args, **kwargs)
+    return decorated
+
+def check_session_admin(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        if 'name' not in session:
+            return redirect('login')
+        elif session.get('role') == 'user':
+            return redirect(url_for('index'))
+        return func(*args, **kwargs)
+    return decorated
+
 @application.route('/')
+@check_session_user
 def index():
-    if 'name' not in session:
-        return redirect(url_for('login'))
-    if session.get('role') == 'admin':
-        return redirect(url_for('dashboard_admin'))
-    
-    data_rekap = hitung_saldo()
+    data_rekap = balance_count()
 
     # semua data transaksi user
     data = transaksi.ambilDataTransaksi(session.get('pengguna_id'))
@@ -62,6 +89,7 @@ def index():
     return render_template('dashboard.html', data=data, name=name, data_rekap=data_rekap)
 
 @application.route('/login', methods=['GET', 'POST'])
+@check_role
 def login():
     if request.method == 'POST':
         username = request.form['username']
@@ -91,6 +119,7 @@ def login():
     return render_template('login.html')
 
 @application.route('/register', methods=['GET', 'POST'])
+@check_role
 def register():
     if request.method == 'POST':
         name = request.form['name']
@@ -112,35 +141,38 @@ def register():
     return render_template('register.html')
 
 @application.route('/show_note/<no>')
+@check_session_user
 def show_note(no):
     data = transaksi.ambilSatuDataTransaksi(no)
     return render_template('show_note.html', data=data)
 
 @application.route('/dashboard_admin')
+@check_session_admin
 def dashboard_admin():
     if session.get('role') == 'user':
         return redirect(url_for('index'))
     name = session.get('name')
     total_user = pengguna.ambilTotalUser()
-    data_user_0_transaksi = pengguna.ambilSemuaDataUserNotHaveTransaction()
-    data_user_transaksi = pengguna.ambilSemuaDataUserHaveTransaction()
+
+    transaction_data = pengguna.get_all_transaction()
+    
     try:
-        if data_user_0_transaksi[0][0] == None:
-            return render_template('dashboard_admin.html', name=name, total_user=total_user, data_user_transaksi=data_user_transaksi)
-        elif data_user_transaksi[0][0] == None:
-            return render_template('dashboard_admin.html', name=name, total_user=total_user, data_user_0_transaksi=data_user_0_transaksi)
+        if transaction_data[0][0] == None:
+            return render_template('dashboard_admin.html', name=name, total_user=total_user, transaction_data=transaction_data)
     except:
         pass
+
     if session.get('pesan') == 'delete_user_berhasil':
         session.pop('pesan', '')
-        return render_template('dashboard_admin.html', name=name, total_user=total_user, data_user_transaksi=data_user_transaksi, data_user_0_transaksi=data_user_0_transaksi, delete_user_berhasil=True)
-    return render_template('dashboard_admin.html', name=name, total_user=total_user, data_user_transaksi=data_user_transaksi, data_user_0_transaksi=data_user_0_transaksi)
+        return render_template('dashboard_admin.html', name=name, total_user=total_user, delete_user_berhasil=True)
+    return render_template('dashboard_admin.html', name=name, total_user=total_user, transaction_data=transaction_data)
 
 @application.route('/add_income', methods=['GET', 'POST'])
+@check_session_user
 def add_income():
     name = session.get('name')
 
-    saldo = hitung_saldo()[3]
+    saldo = balance_count()[3]
 
     if request.method == 'POST':
         # mengambil pengguna id dari session
@@ -177,10 +209,11 @@ def add_income():
     return render_template('add_income.html', name=name, saldo=saldo)
 
 @application.route('/add_spending', methods=['GET', 'POST'])
+@check_session_user
 def add_spending():
     name = session.get('name')
 
-    saldo = hitung_saldo()[3]
+    saldo = balance_count()[3]
 
     if request.method == 'POST':
         # mengambil pengguna id dari session
@@ -217,10 +250,11 @@ def add_spending():
     return render_template('add_spending.html', saldo=saldo, name=name)
 
 @application.route('/profile')
+@check_session_user
 def profile():
     data = pengguna.ambilDataUserbyId(session.get('pengguna_id'))
 
-    saldo = hitung_saldo()[3]
+    saldo = balance_count()[3]
 
     if session.get('pesan') == 'update_profil_berhasil':
         session.pop('pesan', '')
@@ -229,6 +263,7 @@ def profile():
     return render_template('profile.html', data=data, saldo=saldo)
 
 @application.route('/edit_profile', methods=['GET', 'POST'])
+@check_session_user
 def edit_profile():
     data = pengguna.ambilDataUserbyId(session.get('pengguna_id'))
 
@@ -260,10 +295,11 @@ def edit_profile():
     return render_template('edit_profile.html', data=data)
 
 @application.route('/edit_transaction/<no>', methods=['GET', 'POST'])
+@check_session_user
 def edit_transaction(no):
     data = transaksi.ambilSatuDataTransaksi(no)
 
-    saldo = hitung_saldo()[3]
+    saldo = balance_count()[3]
 
     if request.method == 'POST':
         # mengambil pengguna id dari session
@@ -323,8 +359,9 @@ def delete_user(no):
 
 @application.route('/logout')
 def logout():
-    session.pop('name', '')
     session.pop('pengguna_id', '')
+    session.pop('name', '')
+    session.pop('role', '')
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
