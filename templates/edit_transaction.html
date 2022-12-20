@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
     <title>Edit Transaction</title>
 </head>
 <body">
@@ -108,7 +109,7 @@
                 {% endif %}
             </div>
 
-            <!-- container untuk membungkus add income form -->
+            <!-- container untuk membungkus edit transaction form -->
             <div class="flex flex-col rounded-xl" id="add_income">
                 <div>
                     <p class="text-4xl font-bold text-center mt-4 mb-8">Edit your Transaction</p>
@@ -119,14 +120,33 @@
                     <div class="mx-14 my-7">
                         <form action="#" method="post" enctype="multipart/form-data">
                             <div class="flex flex-col gap-3">
+
+                                <!-- form name -->
                                 <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" value="{{ data[4] }}" name="description">
+
+                                <!-- form nominal -->
                                 <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" value="{{ data[2] }}" name="nominal">
+
+                                <!-- form date picker -->
+                                <div class="relative">
+                                    <input datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="top right" class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] w-full" type="text" placeholder="Leave the column blank to not change the date" name="date">
+                                    <i class="fa-regular fa-calendar absolute -translate-x-10 translate-y-4 cursor-pointer"></i>
+                                </div>
+
+                                <!-- form note file -->
                                 <input type="file" name="nota" class="bg-transparent rounded-md border-[#263159] border-2 file:mr-4 file:py-3 file:px-5 file:font-semibold file:bg-[#263159] file:text-[#FFFBEB] hover:file:bg-transparent hover:file:text-[#263159] file:border-0">
                             </div>
+
+                            <!-- container back and save buttons -->
                             <div class="flex gap-28">
+
+                                <!-- back button -->
                                 <a class="bg-red-500 border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-7 text-center hover:animate-pulse" href="{{ url_for('index') }}">Back</a>
+
+                                <!-- save button -->
                                 <input class="bg-[#263159] border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-7 hover:animate-pulse" type="submit" value="Save">
                             </div>
+
                         </form>
                     </div>
 

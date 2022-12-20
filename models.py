@@ -129,7 +129,7 @@ class Transaksi():
     def insertDataTransaksi(self, data):
         self.openDatabase()
         cursor.execute(
-            "INSERT INTO transaksi (pengguna_id, date, deskripsi, pemasukan, pengeluaran, upload_file) VALUES('%s', NOW(), '%s', '%s', '%s', '%s')" % data
+            "INSERT INTO transaksi (pengguna_id, date, deskripsi, pemasukan, pengeluaran, upload_file) VALUES('%s', '%s', '%s', '%s', '%s', '%s')" % data
         )
         database.commit()
         self.closeDatabase
@@ -153,7 +153,7 @@ class Transaksi():
     def updateTransaksi(self, data):
         self.openDatabase()
         cursor.execute(
-            "UPDATE transaksi SET deskripsi='%s', pemasukan='%s', pengeluaran='%s', upload_file='%s' WHERE transaksi_id='%s' " % data
+            "UPDATE transaksi SET deskripsi='%s', pemasukan='%s', pengeluaran='%s', upload_file='%s' , date='%s' WHERE transaksi_id='%s' " % data
         )
         database.commit()
         self.closeDatabase()

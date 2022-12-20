@@ -167,7 +167,7 @@ def dashboard_admin():
 
     if session.get('pesan') == 'delete_user_berhasil':
         session.pop('pesan', '')
-        return render_template('dashboard_admin.html', name=name, total_user=total_user, delete_user_berhasil=True)
+        return render_template('dashboard_admin.html', name=name, total_user=total_user, delete_user_berhasil=True, transaction_data=transaction_data)
     return render_template('dashboard_admin.html', name=name, total_user=total_user, transaction_data=transaction_data)
 
 @application.route('/add_income', methods=['GET', 'POST'])
@@ -181,9 +181,14 @@ def add_income():
         # mengambil pengguna id dari session
         pengguna_id = session.get('pengguna_id')
 
-        # mengambil description, nominal, dan file nota dari form
+        # mengambil description, nominal, dan date dari form
         description = request.form['description']
         nominal = request.form['nominal']
+        date = request.form['date']
+
+        if date == '':
+            date = datetime.now().date()
+
 
         # mengambil total transaksi saat ini
         jumlah = str(transaksi.getCountTransaksiIdinDatabase())
@@ -201,7 +206,7 @@ def add_income():
                         nota.save(file_location)
 
                     filename = 'nota_' + jumlah
-                    data = (pengguna_id, description, nominal, 0, filename)
+                    data = (pengguna_id, date, description, nominal, 0, filename)
                     transaksi.insertDataTransaksi(data)
                     session['pesan'] = 'add_income_berhasil'
                     return redirect(url_for('index'))
@@ -224,7 +229,7 @@ def add_spending():
         # mengambil pengguna id dari session
         pengguna_id = session.get('pengguna_id')
 
-        # mengambil description, nominal, dan file nota dari form
+        # mengambil description, nominal, dan date dari form
         description = request.form['description']
         nominal = request.form['nominal']
         date = request.form['date']
@@ -232,8 +237,6 @@ def add_spending():
         if date == '':
             date = datetime.now().date()
 
-        print(date)
-        
         # mengambil total transaksi saat ini
         jumlah = str(transaksi.getCountTransaksiIdinDatabase())
 
@@ -251,7 +254,7 @@ def add_spending():
 
                     filename = 'nota_' + jumlah
 
-                    data = (pengguna_id, description, 0, nominal, filename)
+                    data = (pengguna_id, date, description, 0, nominal, filename)
                     print(data)
                     transaksi.insertDataTransaksi(data)
                     session['pesan'] = 'add_spending_berhasil'
@@ -313,6 +316,7 @@ def edit_profile():
 @check_session_user
 def edit_transaction(no):
     data = transaksi.ambilSatuDataTransaksi(no)
+    print(data)
 
     saldo = balance_count()[3]
 
@@ -323,28 +327,35 @@ def edit_transaction(no):
         # mengambil description, nominal, dan file nota dari form
         description = request.form['description']
         nominal = request.form['nominal']
-        nota = request.files['nota']
+        date = request.form['date']
+
+        if date == '':
+            date = data[3]
 
         # mengambil total transaksi saat ini
         jumlah = str(transaksi.getCountTransaksiIdinDatabase())
 
         # mengatur lokasi penyimpanan dan nama file
-        filename = application.config['UPLOAD_FOLDER'] + '/' + 'nota_' + jumlah
+        file_location = application.config['UPLOAD_FOLDER'] + '/' + data[6]
         
         if description != '' and nominal != '':
             try:
                 nominal = int(nominal)
                 try:
-                    nota.save(filename)
-                    filename = 'nota_' + jumlah
+                    nota = request.files['nota']
+
+                    if nota.filename != '':
+                        nota.save(file_location)
+
+                    filename = data[6]
 
                     # jika yang 0 adalah pengeluaran maka insert data pemasukan
                     if data[2] == 0:
-                        data = (description, nominal, 0, filename, transaksi_id)
+                        data = (description, nominal, 0, filename, date, transaksi_id)
 
                     # jika yang 0 adalah pemasukan maka insert data pengeluaran
                     elif data[1] == 0:
-                        data = (description, 0, nominal, filename, transaksi_id)
+                        data = (description, 0, nominal, filename, date, transaksi_id)
                     
                     print(data)
                     transaksi.updateTransaksi(data)
@@ -352,11 +363,11 @@ def edit_transaction(no):
                     session['pesan'] = 'edit_transaksi_berhasil'
                     return redirect(url_for('index'))
                 except:
-                    return render_template('edit_transaction.html', gagal=True, saldo=saldo)
+                    return render_template('edit_transaction.html', gagal=True, saldo=saldo, data=data)
             except:
-                return render_template('edit_transaction.html', bukan_angka=True, saldo=saldo)
+                return render_template('edit_transaction.html', bukan_angka=True, saldo=saldo, data=data)
         else:
-            return render_template('edit_transaction.html', kosong=True, saldo=saldo)
+            return render_template('edit_transaction.html', kosong=True, saldo=saldo, data=data)
     return render_template('edit_transaction.html', data=data, saldo=saldo)
 
 @application.route('/delete_transaksi/<no>')
