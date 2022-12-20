@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, session, redirect, request, flash, get_flashed_messages
 from models import Pengguna, Transaksi
 from functools import wraps
+from datetime import datetime
 import os
 
 os.system('sudo /opt/lampp/lampp start')
@@ -183,22 +184,24 @@ def add_income():
         # mengambil description, nominal, dan file nota dari form
         description = request.form['description']
         nominal = request.form['nominal']
-        nota = request.files['nota']
 
         # mengambil total transaksi saat ini
         jumlah = str(transaksi.getCountTransaksiIdinDatabase())
 
         # mengatur lokasi penyimpanan dan nama file
-        filename = application.config['UPLOAD_FOLDER'] + '/' + 'nota_' + jumlah
+        file_location = application.config['UPLOAD_FOLDER'] + '/' + 'nota_' + jumlah
 
         if description != '' and nominal != '':
             try:
                 nominal = int(nominal)
                 try:
-                    nota.save(filename)
+                    nota = request.files['nota']
+
+                    if nota.filename != '':
+                        nota.save(file_location)
+
                     filename = 'nota_' + jumlah
                     data = (pengguna_id, description, nominal, 0, filename)
-                    print(data)
                     transaksi.insertDataTransaksi(data)
                     session['pesan'] = 'add_income_berhasil'
                     return redirect(url_for('index'))
@@ -224,20 +227,30 @@ def add_spending():
         # mengambil description, nominal, dan file nota dari form
         description = request.form['description']
         nominal = request.form['nominal']
-        nota = request.files['nota']
+        date = request.form['date']
 
+        if date == '':
+            date = datetime.now().date()
+
+        print(date)
+        
         # mengambil total transaksi saat ini
         jumlah = str(transaksi.getCountTransaksiIdinDatabase())
 
         # mengatur lokasi penyimpanan dan nama file
-        filename = application.config['UPLOAD_FOLDER'] + '/' + 'nota_' + jumlah
+        file_location = application.config['UPLOAD_FOLDER'] + '/' + 'nota_' + jumlah
         
         if description != '' and nominal != '':
             try:
                 nominal = int(nominal)
                 try:
-                    nota.save(filename)
+                    nota = request.files['nota']
+
+                    if nota.filename != '':
+                        nota.save(file_location)
+
                     filename = 'nota_' + jumlah
+
                     data = (pengguna_id, description, 0, nominal, filename)
                     print(data)
                     transaksi.insertDataTransaksi(data)

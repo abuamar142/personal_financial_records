@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
     <title>Add Income</title>
 </head>
 <body">
@@ -145,6 +146,12 @@
 
                                 <!-- form nominal -->
                                 <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" placeholder="Nominal" name="nominal">
+                                
+                                <!-- form date picker -->
+                                <div class="relative">
+                                    <input datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="top right" class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] w-full" type="text" placeholder="Leave the column blank to enter today's date" name="date">
+                                    <i class="fa-regular fa-calendar absolute -translate-x-10 translate-y-4 cursor-pointer"></i>
+                                </div>
 
                                 <!-- form note file -->
                                 <input type="file" name="nota" class="bg-transparent rounded-md border-[#263159] border-2 file:mr-4 file:py-3 file:px-5 file:font-semibold file:bg-[#263159] file:text-[#FFFBEB] hover:file:bg-transparent hover:file:text-[#263159] file:border-0">
