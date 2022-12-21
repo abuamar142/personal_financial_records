@@ -8,7 +8,6 @@ module.exports = {
           current : 'currentColor',
           primary : '#FFFBEB',
           secondary : '#263159',
-          'text-warning' : ''
         },
       },
     },

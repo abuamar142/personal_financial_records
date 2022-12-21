@@ -31,7 +31,7 @@
                 <div class="-mr-10 text-center flex flex-col gap-5 mt-52">
                     <a href="#">
                         <div class="bg-primary py-3 flex border-2 border-primary gap-5 pl-10 rounded-l-xl">
-                            <img src="/static/images/dark-Home.svg" alt="dashboard">
+                            <i class="fa-solid fa-house text-secondary text-xl"></i>
                             <p class="text-secondary font-bold">
                                 Dashboard
                             </p>
@@ -41,7 +41,7 @@
                     <!-- link untuk menuju halaman profil -->
                     <a href="{{ url_for('profile') }}">
                         <div class="bg-transparent border-2 border-r-0 border-primary py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
-                            <img src="/static/images/light-Profile.svg" alt="profile">
+                            <i class="fa-solid fa-user text-primary text-xl"></i>
                             <p class="text-primary font-bold">
                                 Profile
                             </p>
@@ -50,8 +50,8 @@
     
                     <!-- link untuk keluar aplikasi -->
                     <a href="{{ url_for('logout') }}">
-                        <div class="bg-transparent border-2 border-r-0 border-primary py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
-                            <img src="/static/images/light-Logout.svg" alt="logout">
+                        <div class="bg-transparent border-2 border-r-0 border-primary py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse items-center">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-primary text-xl"></i>
                             <p class="text-primary font-bold">
                                 Logout
                             </p>
@@ -244,21 +244,6 @@
         document.documentElement.scrollTop = 0;
     }
     </script>
-
-    <!-- <script>
-        const confirmation = document.querySelector('.confirmation');
-        const showConfirmation = document.querySelector('.show-confirmation');
-        const closeConfirmation = document.querySelector('.close-confirmation');
-
-        showConfirmation.addEventListener('click', function()  {
-            confirmation.classList.remove('invisible')
-        });
-
-        closeConfirmation.addEventListener('click', function()  {
-            confirmation.classList.add('invisible')
-        });
-        
-    </script> -->
 
     <script>
         function showConfirmation(no) {
