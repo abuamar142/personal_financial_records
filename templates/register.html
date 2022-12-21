@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <title>Register</title>
 </head>
@@ -21,20 +21,20 @@
     }
 </script>
 <body">
-    <div class="bg-[#263159] min-h-screen p-10 flex flex-col justify-between">
+    <div class="bg-secondary min-h-screen p-10 flex flex-col justify-between">
 
         <!-- tampilan logo -->
         <div class="flex items-center gap-3">
             <div>
                 <img src="/static/images/logo.svg" alt="logo">
             </div>
-            <div class="text-[#FFFBEB] font-bold">
+            <div class="text-primary font-bold">
                 <p>Personal Financial Records</p>
             </div>
         </div>
 
         <div>
-            <div class="bg-[#FFFBEB] mx-auto py-10 rounded-xl flex flex-col gap-5 max-w-lg">
+            <div class="bg-primary mx-auto py-10 rounded-xl flex flex-col gap-5 max-w-lg">
                 
                 <!-- tampilan flash message -->
                 {% if sudah_ada %}
@@ -59,21 +59,21 @@
                         <div class="flex flex-col gap-3">
 
                             <!-- form name -->
-                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" placeholder="Name" name="name">
+                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary" type="text" placeholder="Name" name="name">
 
                             <!-- form username -->
-                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" placeholder="Username" name="username">
+                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary" type="text" placeholder="Username" name="username">
 
                             <!-- form password -->
                             <div class="relative">
-                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] w-full" type="password" placeholder="Password" name="password" id="password">
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary w-full" type="password" placeholder="Password" name="password" id="password">
                                 <i class="fa-regular fa-eye-slash absolute -translate-x-10 translate-y-5 cursor-pointer" onclick="showPassword('password')"><button></button></i>
                             </div>
 
                         </div>
 
                         <!-- tombol daftar -->
-                        <input class="bg-[#263159] border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-7" type="submit" value="Sign up">
+                        <input class="bg-secondary border-2 px-5 py-3 rounded-md border-secondary text-primary font-bold w-full mt-7" type="submit" value="Sign up">
 
                     </form>
 
@@ -90,7 +90,7 @@
         </div>
 
         <!-- tampilan copyright -->
-        <div class="text-[#FFFBEB] text-sm">
+        <div class="text-primary text-sm">
             Copyright @ Kelompok 4 <br> Privacy policy
         </div>
     </div>
