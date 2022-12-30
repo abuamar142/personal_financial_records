@@ -6,8 +6,8 @@ module.exports = {
         colors: {
           transparent : 'transparent',
           current : 'currentColor',
-          primary : '#FFFBEB',
-          secondary : '#263159',
+          primary : '#F9F5EB',
+          secondary : '#25316D',
         },
       },
     },

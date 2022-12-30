@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <title>Show Note</title>
 </head>
 <body">
-    <div class="bg-[#263159] min-h-screen p-10 flex flex-col justify-between">
+    <div class="bg-secondary min-h-screen p-10 flex flex-col justify-between">
         <div class="flex justify-between">
 
             <!-- tampilan logo -->
@@ -17,17 +17,17 @@
                 <div>
                     <img src="/static/images/logo.svg" alt="logo">
                 </div>
-                <div class="text-[#FFFBEB] font-bold">
+                <div class="text-primary font-bold">
                     <p>Personal Financial Records</p>
                 </div>
             </div>
 
             <!-- tombol kembali -->
-            <a class="bg-red-500 border-2 px-5 py-2 rounded-md border-[#263159] text-[#FFFBEB] font-bold text-center hover:animate-pulse" href="{{ url_for('index') }}">Back</a>
+            <a class="bg-red-500 border-2 px-5 py-2 rounded-md border-secondary text-primary font-bold text-center hover:animate-pulse" href="{{ url_for('index') }}">Back</a>
         </div>
 
         <!-- container untuk membungkus tampilan nota -->
-        <div class="flex flex-col text-[#FFFBEB] items-center">
+        <div class="flex flex-col text-primary items-center">
 
             <!-- deskripsi dari file note -->
             <p class="text-xl font-bold text-center mt-8">{{ data[4] }}</p>
@@ -38,12 +38,12 @@
             </div>
 
             <!-- tanggal penginputan transaksi -->
-            <p class="text-base mt-2 text-center">{{ data[3] }}</p>
+            <p class="text-base mt-2 text-center">{{ data[3].strftime("%A, %d %B %Y") }}</p>
 
         </div>
 
         <!-- tampilan copyright -->
-        <div class="text-[#FFFBEB] text-sm">
+        <div class="text-primary text-sm">
             Copyright @ Kelompok 4 <br> Privacy policy
         </div>
     </div>

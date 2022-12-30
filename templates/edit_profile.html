@@ -19,7 +19,7 @@
     }
 </script>
 <body">
-    <div class="bg-secondary min-h-screen p-10 flex flex-col justify-between">
+    <div class="bg-secondary min-h-screen p-10 flex flex-col justify-between text-black">
 
         <!-- menampilkan logo -->
         <div class="flex items-center gap-3">
@@ -63,25 +63,25 @@
                         <div class="flex flex-col gap-3">
 
                             <!-- form name -->
-                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary" type="text" value="{{ data[1] }}" name="name">
+                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black" type="text" value="{{ data[1] }}" name="name">
 
                             <!-- form username -->
-                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary" type="text" value="{{ data[2] }}" name="username">
+                            <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black" type="text" value="{{ data[2] }}" name="username">
 
                             <!-- form new password -->
                             <div class="relative">
-                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary w-full" type="password" placeholder="New Password" name="new-password" id="new-password">
-                                <i class="fa-regular fa-eye-slash absolute -translate-x-10 translate-y-5 cursor-pointer" onclick="showPassword('new-password')"><button></button></i>
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black w-full" type="password" placeholder="New Password" name="new-password" id="new-password">
+                                <i class="fa-regular fa-eye-slash absolute -translate-x-10 translate-y-5 cursor-pointer text-black" onclick="showPassword('new-password')"><button></button></i>
                             </div>
 
                             <!-- form reenter new password -->
                             <div class="relative">
-                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary w-full" type="password" placeholder="Re-enter New Password" name="renew-password" id="renew-password">
-                                <i class="fa-regular fa-eye-slash absolute -translate-x-10 translate-y-5 cursor-pointer" onclick="showPassword('renew-password')"><button></button></i>
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black w-full" type="password" placeholder="Re-enter New Password" name="renew-password" id="renew-password">
+                                <i class="fa-regular fa-eye-slash absolute -translate-x-10 translate-y-5 cursor-pointer text-black" onclick="showPassword('renew-password')"><button></button></i>
                             </div>
 
                             <!-- form bio -->
-                            <textarea class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-secondary" name="bio" cols="mx-auto" rows="mx-auto" placeholder="Bio"></textarea>
+                            <textarea class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black" name="bio" cols="mx-auto" rows="mx-auto" placeholder="Bio"></textarea>
                             
                         </div>
                         <div class="flex gap-28">

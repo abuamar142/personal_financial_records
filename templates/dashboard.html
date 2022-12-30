@@ -9,7 +9,7 @@
     <title>Dashboard</title>
 </head>
 <body">
-    <div class="min-h-screen min-w-full flex bg-primary">
+    <div class="min-h-screen min-w-full flex bg-primary text-black">
 
         <!-- container untuk sidebar -->
         <div class="bg-secondary p-10 min-w-max flex flex-col justify-between">
@@ -31,8 +31,8 @@
                 <div class="-mr-10 text-center flex flex-col gap-5 mt-52">
                     <a href="#">
                         <div class="bg-primary py-3 flex border-2 border-primary gap-5 pl-10 rounded-l-xl">
-                            <i class="fa-solid fa-house text-secondary text-xl"></i>
-                            <p class="text-secondary font-bold">
+                            <i class="fa-solid fa-house text-black text-xl"></i>
+                            <p class="text-black font-bold">
                                 Dashboard
                             </p>
                         </div>
@@ -141,25 +141,39 @@
                             <p>{{ data_rekap[1] }}</p>
                         </div>
                         <div>
-                            Persentase Pengeluaran
+                            Spending Percentage
                         </div>
                         <div class="bg-transparent border-2 border-secondary px-5 rounded-full">
                             <p>{{ data_rekap[0] }}</p>
                         </div>
                     </div>
                     <div class="mb-4 max-w-full h-4 bg-gray-200 rounded-full dark:bg-gray-700">
-                        <div class="h-4 bg-blue-600 rounded-full dark:bg-blue-500 w-[{{ data_rekap[2] }}%]"></div>
+                        <div class="h-4 bg-secondary rounded-full w-[{{ data_rekap[2] }}%]"></div>
                     </div>
                     <hr class="border border-secondary mb-8">
                     <p class="text-4xl font-bold text-center">History</p>
-                    <div class="content-between mt-8">
+
+                    <!-- container untuk multiple select -->
+                    <div class="p-4 flex col-span-6 gap-10 w-full">
+                        <p class="block mb-2 text-base font-medium text-black dark:text-white w-1/4">Select month</p>
+                        <select id="month" class="bg-primary border-2 border-secondary text-black text-base rounded-lg w-full px-4">
+                            <option selected>Choose a country</option>
+                            <option value="US">United States</option>
+                            <option value="CA">Canada</option>
+                            <option value="FR">France</option>
+                            <option value="DE">Germany</option>
+                        </select>
+                    </div>
+
+                    <div class="content-between">
+
                         <table class="w-full">
                             <thead>
                               <tr>
-                                  <th class="border-r-2 border-b-2 border-secondary py-4 w-fit">Date</th>
+                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Date</th>
                                   <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Description</th>
                                   <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Income</th>
-                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Spending</th>
+                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-32">Spending</th>
 
                                   <!-- link action -->
                                   <th class="border-b-2 border-secondary py-4">Action</th>
@@ -172,7 +186,7 @@
                               <tr class="border-b-2">
                                     <!-- tanggal -->
                                     <td class="border-r-2 border-secondary py-2 w-fit">
-                                      {{ data[3].strftime("%A, %d %B %Y") }}
+                                      {{ data[3].strftime("%d %b") }}
                                     </td>
 
                                     <!-- keterangan -->
@@ -182,25 +196,25 @@
 
                                     <!-- menampilkan pemasukan -->
                                     <td class="border-r-2 border-secondary py-2 px-4">
-                                        {{ data[1] }}
+                                        {{ '{0:,}'.format(data[1]) }}
                                     </td>
 
                                     <!-- menampilkan pengeluaran -->
                                     <td class="border-r-2 border-secondary py-2 px-4">
-                                        {{ data[2] }}
+                                        {{ '{0:,}'.format(data[2]) }}
                                     </td>
 
                                     <!-- menampilkan link action -->
                                     <td>
-                                        <div class="flex gap-2 justify-center">
-                                            <a href="{{ url_for('show_note', no=data[0]) }}" class="hover:duration-700 hover:animate-pulse bg-transparent border-2 border-secondary p-2 rounded-full">
-                                                <img src="/static/images/dark-Folder .svg" alt="show-note" title="tampilkan nota">
+                                        <div class="flex gap-5 justify-center px-2">
+                                            <a href="{{ url_for('show_note', no=data[0]) }}" class="">
+                                                <i class="fa-regular fa-file text-xl text-black" title="show-notes"></i>
                                             </a>
-                                            <a href="{{ url_for('edit_transaction', no=data[0]) }}" class="hover:duration-700 hover:animate-pulse bg-transparent border-2 border-secondary p-2 rounded-full">
-                                                <img src="/static/images/dark-Edit.svg" alt="update-data" title="edit transaksi">
+                                            <a href="{{ url_for('edit_transaction', no=data[0]) }}" class="">
+                                                <i class="fa-solid fa-pencil text-xl text-black" title="change-transaction"></i>
                                             </a>
-                                            <a href="#" class="hover:duration-700 hover:animate-pulse bg-transparent border-2 border-secondary p-2 rounded-full" type="button" onclick="showConfirmation('{{ data[0] }}')">
-                                                <img src="/static/images/dark-Delete .svg" alt="delete-data" title="hapus-data">
+                                            <a href="#" class="" type="button" onclick="showConfirmation('{{ data[0] }}')">
+                                                <i class="fa-solid fa-trash text-xl text-black" title="delete-transaction"></i>
                                             </a>
 
                                             <!-- start confirmation box -->

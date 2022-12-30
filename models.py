@@ -11,6 +11,7 @@ class Pengguna():
         self.password = password
         self.role = role
         self.bio = bio
+        self.createTable()
 
     def openDatabase(self):
         global database, cursor
@@ -26,6 +27,25 @@ class Pengguna():
         global database, cursor
         database.close()
 
+    def createTable(self):
+        self.openDatabase()
+        try:
+            cursor.execute(
+                """
+                    CREATE TABLE pengguna (
+                        pengguna_id INT PRIMARY KEY AUTO_INCREMENT,
+                        nama VARCHAR(30),
+                        username VARCHAR(30),
+                        password VARCHAR(32),
+                        role ENUM('admin', 'user'),
+                        bio TEXT
+                    )
+                """
+            )
+        except pymysql.Error as error:
+            print(error)
+        self.closeDatabase()
+
     def ambilDataUserbyId(self, pengguna_id):
         self.openDatabase()
         cursor.execute(
@@ -40,6 +60,7 @@ class Pengguna():
         cursor.execute(
             "SELECT * FROM pengguna WHERE username = '%s' AND password = MD5('%s') " % (username, password)
         )
+
         data_user = cursor.fetchone()
         self.closeDatabase()
         return data_user
@@ -111,6 +132,7 @@ class Transaksi():
         self.deskripsi = deskripsi
         self.pengguna_id = pengguna_id
         self.upload_file = upload_file
+        self.createTable()
         
     def openDatabase(self):
         global database, cursor
@@ -125,6 +147,28 @@ class Transaksi():
     def closeDatabase(self):
         global database, cursor
         database.close()
+
+    
+    def createTable(self):
+        self.openDatabase()
+        try:
+            cursor.execute(
+                """
+                    CREATE TABLE transaksi (
+                        transaksi_id INT PRIMARY KEY AUTO_INCREMENT,
+                        pemasukan INT,
+                        pengeluaran INT,
+                        date DATE,
+                        deskripsi VARCHAR(100),
+                        pengguna_id INT,
+                        upload_file VARCHAR(30),
+                        FOREIGN KEY (pengguna_id) REFERENCES pengguna(pengguna_id)
+                    )
+                """
+            )
+        except pymysql.Error as error:
+            print(error)
+        self.closeDatabase()
 
     def insertDataTransaksi(self, data):
         self.openDatabase()

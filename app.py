@@ -4,7 +4,7 @@ from functools import wraps
 from datetime import datetime
 import os
 
-os.system('sudo /opt/lampp/lampp start')
+# os.system('sudo /opt/lampp/lampp start')
 
 application = Flask(__name__)
 application.config['SECRET_KEY'] = '1234567890!@#$%^&*()'

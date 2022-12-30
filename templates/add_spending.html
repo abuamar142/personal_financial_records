@@ -5,15 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <script src="https://unpkg.com/flowbite@1.5.5/dist/datepicker.js"></script>
     <title>Add Spending</title>
 </head>
 <body">
-    <div class="min-h-screen min-w-full flex bg-[#FFFBEB]">
+    <div class="min-h-screen min-w-full flex bg-primary text-black">
 
         <!-- container untuk sidebar -->
-        <div class="bg-[#263159] p-10 min-w-max flex flex-col justify-between">
+        <div class="bg-secondary p-10 min-w-max flex flex-col justify-between">
 
             <!-- container untuk logo dan menu pada sidebar -->
             <div>
@@ -23,7 +24,7 @@
                     <div>
                         <img src="/static/images/logo.svg" alt="logo">
                     </div>
-                    <div class="text-[#FFFBEB] font-bold">
+                    <div class="text-primary font-bold">
                         <p>Personal Financial Records</p>
                     </div>
                 </div>
@@ -33,9 +34,9 @@
 
                     <!-- link untuk menuju halaman dashboard -->
                     <a href="{{ url_for('index') }}">
-                        <div class="bg-[#FFFBEB] py-3 flex border-2 border-[#FFFBEB] gap-5 pl-10 rounded-l-xl">
-                            <img src="/static/images/dark-Home.svg" alt="dashboard">
-                            <p class="text-[#263159] font-bold">
+                        <div class="bg-primary py-3 flex border-2 border-primary gap-5 pl-10 rounded-l-xl">
+                            <i class="fa-solid fa-house text-secondary text-xl"></i>
+                            <p class="text-secondary font-bold">
                                 Dashboard
                             </p>
                         </div>
@@ -43,9 +44,9 @@
     
                     <!-- link untuk menuju halaman profil -->
                     <a href="{{ url_for('profile') }}">
-                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
-                            <img src="/static/images/light-Profile.svg" alt="profile">
-                            <p class="text-[#FFFBEB] font-bold">
+                        <div class="bg-transparent border-2 border-r-0 border-primary py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <i class="fa-solid fa-user text-primary text-xl"></i>
+                            <p class="text-primary font-bold">
                                 Profile
                             </p>
                         </div>
@@ -53,9 +54,9 @@
     
                     <!-- link untuk keluar aplikasi -->
                     <a href="{{ url_for('logout') }}">
-                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
-                            <img src="/static/images/light-Logout.svg" alt="logout">
-                            <p class="text-[#FFFBEB] font-bold">
+                        <div class="bg-transparent border-2 border-r-0 border-primary py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-primary text-xl"></i>
+                            <p class="text-primary font-bold">
                                 Logout
                             </p>
                         </div>
@@ -66,7 +67,7 @@
             </div>
         
             <!-- menampilkan copyright -->
-            <div class="text-[#FFFBEB] text-sm">
+            <div class="text-primary text-sm">
                 Copyright @ Kelompok 4 <br> Privacy policy
             </div>
 
@@ -74,7 +75,7 @@
 
         <!-- container untuk konten utama -->
         <div class="fixed w-full pl-[330px]">
-            <div class="bg-[#FFFBEB] flex justify-between items-center p-10 pb-5 border-b-2 border-[#263159]">
+            <div class="bg-primary flex justify-between items-center p-10 pb-5 border-b-2 border-secondary">
 
                 <!-- tampilan username -->
                 <div class="flex flex-col gap-3">
@@ -84,7 +85,7 @@
                 <!-- tampilan dari saldo -->
                 <div class="flex gap-5 items-center">
                     <p class="text-xl">Your Balance</p>
-                    <div class="px-14 py-2 bg-[#263159] rounded-lg text-[#FFFBEB]">
+                    <div class="px-14 py-2 bg-secondary rounded-lg text-primary">
                         <p class="font-bold text-lg">
                             {{ saldo }}
                         </p>
@@ -112,18 +113,18 @@
                 {% endif %}
 
                 <!-- tombol-tombol -->
-                <div class="mt-4 flex place-content-around text-[#FFFBEB]">
+                <div class="mt-4 flex place-content-around text-primary">
 
                     <!-- tombol untuk menuju halaman tambah pemasukan -->
                     <a href="{{ url_for('add_income') }}">
-                        <div class="bg-[#263159] py-2 px-10 rounded-md border-2 border-[#263159] hover:bg-transparent hover:text-[#263159] font-bold">
+                        <div class="bg-secondary py-2 px-10 rounded-md border-2 border-secondary hover:bg-transparent hover:text-secondary font-bold">
                             Add Income
                         </div>
                     </a>
 
                     <!-- tombol untuk menuju halaman tambah pengeluaran -->
                     <a href="#">
-                        <div class="bg-[#FFFBEB] text-[#263159] py-2 px-10 rounded-md border-2 border-[#263159] font-bold">
+                        <div class="bg-primary text-secondary py-2 px-10 rounded-md border-2 border-secondary font-bold">
                             Add Spending
                         </div>
                     </a>
@@ -145,24 +146,24 @@
                             <div class="flex flex-col gap-3">
 
                                 <!-- form name -->
-                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" placeholder="Description" name="description">
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black" type="text" placeholder="Description" name="description">
 
                                 <!-- form nominal -->
-                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159]" type="text" placeholder="Nominal" name="nominal">
+                                <input class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black" type="text" placeholder="Nominal" name="nominal">
 
                                 <!-- form date picker -->
                                 <div class="relative">
-                                    <input datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="top right" class="bg-transparent border-2 px-5 py-3 rounded-md border-[#263159] text-[#263159] w-full" type="text" placeholder="Leave the column blank to enter today's date" name="date">
-                                    <i class="fa-regular fa-calendar absolute -translate-x-10 translate-y-4 cursor-pointer"></i>
+                                    <input datepicker datepicker-format="yyyy-mm-dd" datepicker-orientation="top right" class="bg-transparent border-2 px-5 py-3 rounded-md border-secondary text-black w-full" type="text" placeholder="Leave the column blank to enter today's date" name="date">
+                                    <i class="fa-regular fa-calendar absolute -translate-x-10 translate-y-3 cursor-pointer text-xl text-black"></i>
                                 </div>
 
                                 <!-- form file nota -->
-                                <input type="file" name="nota" class="bg-transparent rounded-md border-[#263159] border-2 file:mr-4 file:py-3 file:px-5 file:font-semibold file:bg-[#263159] file:text-[#FFFBEB] hover:file:bg-transparent hover:file:text-[#263159] file:border-0">
+                                <input type="file" name="nota" class="bg-transparent rounded-md border-secondary border-2 file:mr-4 file:py-3 file:px-5 file:font-semibold file:bg-secondary file:text-primary hover:file:bg-transparent hover:file:text-black file:border-0">
 
                             </div>
 
                             <!-- tombol input -->
-                            <input class="bg-[#263159] border-2 px-5 py-3 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-full mt-8 hover:bg-transparent hover:text-[#263159]" type="submit" value="Add">
+                            <input class="bg-secondary border-2 px-5 py-3 rounded-md border-secondary text-primary font-bold w-full mt-8 hover:bg-transparent hover:text-secondary" type="submit" value="Add">
                             
                         </form>
                     </div>
@@ -174,7 +175,7 @@
                 </div>
             </div>
             
-            <hr class="mt-8 border border-[#263159]">
+            <hr class="mt-8 border border-secondary">
 
         </div>
 

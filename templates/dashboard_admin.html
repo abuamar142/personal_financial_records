@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <title>Dashboard Admin</title>
 </head>
@@ -18,10 +19,10 @@
 }
 </script>
 <body">
-    <div class="min-h-screen min-w-full flex bg-[#FFFBEB]">
+    <div class="min-h-screen min-w-full flex bg-primary">
 
         <!-- container untuk sidebar -->
-        <div class="bg-[#263159] p-10 min-w-max flex flex-col justify-between">
+        <div class="bg-secondary p-10 min-w-max flex flex-col justify-between">
 
             <!-- container untuk logo dan menu pada sidebar -->
             <div>
@@ -31,7 +32,7 @@
                     <div>
                         <img src="/static/images/logo.svg" alt="logo">
                     </div>
-                    <div class="text-[#FFFBEB] font-bold">
+                    <div class="text-primary font-bold">
                         <p>Personal Financial Records</p>
                     </div>
                 </div>
@@ -39,9 +40,9 @@
                 <!-- menampilkan pilihan menu pada sidebar -->
                 <div class="-mr-10 text-center flex flex-col gap-5 mt-52">
                     <a href="#">
-                        <div class="bg-[#FFFBEB] py-3 flex border-2 border-[#FFFBEB] gap-5 pl-10 rounded-l-xl">
-                            <img src="/static/images/dark-Home.svg" alt="dashboard">
-                            <p class="text-[#263159] font-bold">
+                        <div class="bg-primary py-3 flex border-2 border-primary gap-5 pl-10 rounded-l-xl">
+                            <i class="fa-solid fa-house text-secondary text-xl"></i>
+                            <p class="text-secondary font-bold">
                                 Dashboard
                             </p>
                         </div>
@@ -49,9 +50,9 @@
     
                     <!-- link untuk keluar aplikasi -->
                     <a href="{{ url_for('logout') }}">
-                        <div class="bg-transparent border-2 border-r-0 border-[#FFFBEB] py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
-                            <img src="/static/images/light-Logout.svg" alt="logout">
-                            <p class="text-[#FFFBEB] font-bold">
+                        <div class="bg-transparent border-2 border-r-0 border-primary py-3 flex gap-5 pl-10 rounded-l-xl hover:animate-pulse">
+                            <i class="fa-solid fa-arrow-right-from-bracket text-primary text-xl"></i>
+                            <p class="text-primary font-bold">
                                 Logout
                             </p>
                         </div>
@@ -60,14 +61,14 @@
             </div>
         
             <!-- menampilkan copyright -->
-            <div class="text-[#FFFBEB] text-sm">
+            <div class="text-primary text-sm">
                 Copyright @ Kelompok 4 <br> Privacy policy
             </div>
         </div>
 
         <!-- container untuk konten utama -->
         <div class="fixed w-full pl-[330px]">
-            <div class="bg-[#FFFBEB] flex justify-between items-center p-10 pb-5 border-b-2 border-[#263159]">
+            <div class="bg-primary flex justify-between items-center p-10 pb-5 border-b-2 border-secondary">
                 <!-- tampilan username -->
                 <div>
                     <p class="text-3xl font-bold">{{ name }}</p>
@@ -76,7 +77,7 @@
                 <!-- tampilan dari saldo -->
                 <div class="flex gap-5 items-center">
                     <p class="text-xl">Total user</p>
-                    <div class="px-14 py-2 bg-[#263159] rounded-lg text-[#FFFBEB]">
+                    <div class="px-14 py-2 bg-secondary rounded-lg text-primary">
                         <p class="font-bold text-lg">
                             {{ total_user }}
                         </p>
@@ -90,19 +91,19 @@
 
             <!-- container untuk membungkus history dari transaksi user -->
             <div class="flex flex-col mt-8" id="history">
-                <hr class="border border-[#263159] mb-8">
+                <hr class="border border-secondary mb-8">
                 <div>
                     <p class="text-4xl font-bold text-center mt-8">List of Registered Users</p>
-                    <p class="text-base mt-2 text-center">contains data from users who have been registered in the application</p>
+                    <p class="text-base mt-2 text-center">Contains data from users who have been registered in the application</p>
                     <div class="content-between mt-8">
                         <table class="w-full">
                             <thead>
                               <tr>
-                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">User Id</th>
-                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Name</th>
-                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Username</th>
-                                  <th class="border-r-2 border-b-2 border-[#263159] py-4 px-4">Total Transaction</th>
-                                  <th class="border-b-2 border-[#263159] py-4 px-4">Delete User</th>
+                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-4">User Id</th>
+                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Name</th>
+                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Username</th>
+                                  <th class="border-r-2 border-b-2 border-secondary py-4 px-4">Total Transaction</th>
+                                  <th class="border-b-2 border-secondary py-4 px-4">Delete User</th>
                                 </tr>
                             </thead>
                             <tbody class="text-center">
@@ -111,53 +112,53 @@
                               {% for data in transaction_data %}
                               <tr>
                                     <!-- pengguna id -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
+                                    <td class="border-r-2 border-secondary py-2 px-4">
                                       {{ data[0] }}
                                     </td>
 
                                     <!-- nama -->
-                                    <td class="border-r-2 border-[#263159] py-2 text-left px-4">
+                                    <td class="border-r-2 border-secondary py-2 text-left px-4">
                                         {{ data[1] }}
                                     </td>
 
                                     <!-- username -->
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
+                                    <td class="border-r-2 border-secondary py-2 px-4">
                                         {{ data[2] }}
                                     </td>
 
                                     <!-- total transaction -->
                                     {% if data[4] == None %}
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
+                                    <td class="border-r-2 border-secondary py-2 px-4">
                                         0
                                     </td>
                                     
                                     {% else %}
-                                    <td class="border-r-2 border-[#263159] py-2 px-4">
+                                    <td class="border-r-2 border-secondary py-2 px-4">
                                         {{ data[4] }}
                                     </td>
                                     {% endif %}
                                     <!-- menampilkan link delete user -->
                                     <td class="py-2 px-4 flex justify-center">
-                                        <a href="#" class="hover:duration-700 hover:animate-pulse bg-transparent border-2 border-[#263159] p-2 rounded-full" onclick="showConfirmation('{{ data[0] }}')">
-                                            <img src="/static/images/dark-Delete .svg" alt="delete-data" title="hapus-data">
+                                        <a href="#" class="" onclick="showConfirmation('{{ data[0] }}')">
+                                            <i class="fa-solid fa-trash text-xl text-secondary" title="delete-user"></i>
                                         </a>
 
                                         <!-- start confirmation box -->
 
                                         {% set id_confirm = "confirmation_box_%s" % data[0] %}
 
-                                        <div class="confirmation h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-[#263159] bg-opacity-50 invisible" id={{ id_confirm }}>
-                                            <div class="bg-[#FFFBEB] rounded-lg shadow-lg w-1/3 flex flex-col gap-5 p-5 items-center">
+                                        <div class="confirmation h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-secondary bg-opacity-50 invisible" id={{ id_confirm }}>
+                                            <div class="bg-primary rounded-lg shadow-lg w-1/3 flex flex-col gap-5 p-5 items-center">
                                                 <div>
-                                                    <img class="w-24" src="/static/images/dark-Danger Triangle.svg" alt="danger-icon">
+                                                    <i class="fa-solid fa-triangle-exclamation text-8xl"></i>
                                                 </div>
                                                 <div>
-                                                    <h2 class="font-bold text-xl text-center">Are you sure you want to delete your transaction?</h2>
+                                                    <h2 class="font-bold text-xl text-center pt-4">Are you sure you want to delete your transaction?</h2>
                                                 </div>
                                                 <div class="flex justify-between gap-36">
-                                                    <a class="close-confirmation bg-[#263159] border-2 px-4 py-2 rounded-md border-[#263159] text-[#FFFBEB] font-bold w-35 mt-7 text-center hover:animate-pulse" href="#" onclick="hideConfirmation('{{ data[0] }}')">No, Back</a>
+                                                    <a class="close-confirmation bg-secondary border-2 px-4 py-2 rounded-md border-secondary text-primary font-bold w-35 mt-7 text-center hover:animate-pulse" href="#" onclick="hideConfirmation('{{ data[0] }}')">No, Back</a>
 
-                                                    <a class="bg-red-500 border-2 px-4 py-2 rounded-md border-red-500 text-[#FFFBEB] font-bold w-35 mt-7 text-center hover:animate-pulse" href="{{ url_for('delete_user', no=data[0]) }}">Yes, Delete</a>
+                                                    <a class="bg-red-500 border-2 px-4 py-2 rounded-md border-red-500 text-primary font-bold w-35 mt-7 text-center hover:animate-pulse" href="{{ url_for('delete_user', no=data[0]) }}">Yes, Delete</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -171,11 +172,11 @@
                         </table>
                     </div>
                 </div>
-                <hr class="mt-8 border border-[#263159]">
+                <hr class="mt-8 border border-secondary">
             </div>
 
         <!-- tombol untuk kembali ke atas ketika di klik -->
-        <button onclick="topFunction()" id="top_button" class="fixed bottom-10 right-10 px-4 py-2 bg-[#263159] text-[#FFFBEB] border-2 border-[#263159] rounded-md hover:animate-pulse">
+        <button onclick="topFunction()" id="top_button" class="fixed bottom-10 right-10 px-4 py-2 bg-secondary text-primary border-2 border-secondary rounded-md hover:animate-pulse">
             Top
         </button>
 
